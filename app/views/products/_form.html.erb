@@ -1,0 +1,22 @@
+<%= @product.errors.full_messages.join(", ") %>
+
+<%= form_for @product do |f| %>
+  <fieldset class="form-group">
+    <%= f.label :title %>
+    <%= f.text_field :title, class:"form-control" %>
+  </fieldset>
+  <fieldset class="form-group">
+    <%= f.label :price%>
+    $ <%= f.text_field :price, class:"form-control"  %>
+  </fieldset>
+  <fieldset class="form-group">
+    <%= f.label :category %>
+    <%= f.collection_select :category_id, Category.order(:name), :id, :name %>
+  </fieldset>
+  <fieldset class="form-group">
+    <%= f.label :description %>
+    <%= f.text_area :description, class:"form-control"  %>
+  </fieldset>
+
+<%= f.submit class: "btn btn-primary" %>
+<% end%>

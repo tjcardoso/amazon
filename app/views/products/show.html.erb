@@ -1,0 +1,36 @@
+
+<h1><%=@product.title.titleize %></h1>
+<h3><%= @product.description %></h3>
+<p>Regular Price: $<%= @product.price %></p>
+<p>Sale Price: $<%= @product.price %></p>
+<p>Created by: <%= @product.user_full_name %></p>
+
+<br>
+<%= link_to "Edit", edit_product_path(@product)%>
+<%= link_to "Delete", product_path(@product),
+method: :delete,
+data: {confirm: 'Are you sure?'} %>
+<br>
+<br>
+<p>
+  Favorites: (<%= @product.favorites.count %>)
+</p>
+
+<% if user_signed_in? && @product.favorited_by?(current_user) %>
+  <%= link_to "Remove Favorite", product_favorite_path(@product, @product.favorite_for(current_user)), method: :delete %>
+<% else %>
+  <%= link_to "Favorite", product_favorites_path(@product), class: "icon-big", method: :post   %>
+<% end %>
+<br><br>
+
+
+
+<errors><%= @review.errors.full_messages.join(", ") %></errors>
+
+<h2>Reviews:</h2>
+<p>
+<%= render @product.reviews %>
+</p>
+
+<h2>Add a review:</h2>
+<%= render 'reviews/form' %>

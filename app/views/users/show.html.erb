@@ -1,0 +1,18 @@
+<h2>User Profile</h2>
+<br>
+
+<h4>Name: <%= current_user.full_name %></h4>
+<h4>Email: <%= current_user.email %></h4>
+
+<br>
+<h3>Favorited products:</h3>
+<br>
+
+
+<div class="list-group .col-md-4">
+
+<% @favorites.each do |f| %>
+<%= link_to f.product.title, product_path, class: "list-group-item" %>
+<% end %>
+
+</div>
