@@ -27,10 +27,14 @@ data: {confirm: 'Are you sure?'} %>
 
 <errors><%= @review.errors.full_messages.join(", ") %></errors>
 
-<h2>Reviews:</h2>
-<p>
-<%= render @product.reviews %>
-</p>
-
 <h2>Add a review:</h2>
-<%= render 'reviews/form' %>
+<div id="review-form">
+  <%= render '/reviews/form', review: @review %>
+</div>
+
+<h2>Reviews:</h2>
+<div id="reviews">
+  <% @product.reviews.each do |rev| %>
+    <%= render "/reviews/review", review: rev %>
+  <% end %>
+</div>

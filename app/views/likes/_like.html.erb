@@ -1,0 +1,8 @@
+
+<% if user_signed_in? && review.liked_by?(current_user) %>
+  <%= link_to "Remove Like", product_review_like_path(review.like_for(current_user), product_id: @product.id, review_id: review.id), method: :delete, remote: true %>
+<% else %>
+  <%= link_to "Like", product_review_likes_path(product_id: @product.id, review_id: review.id), class: "icon-big", method: :post, remote: true   %>
+<% end %><br>
+
+<p>Likes: (<%= review.likes.count %>)</p>

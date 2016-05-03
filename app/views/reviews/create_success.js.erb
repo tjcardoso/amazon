@@ -1,0 +1,3 @@
+$('#reviews').prepend("<%= j render '/reviews/review', review: @review, style: 'display: none' %>");
+$('#review-form').html("<%= j render '/reviews/form', review: Review.new %>");
+$("#<%= dom_id(@review) %>").slideDown(1000);

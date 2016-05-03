@@ -5,12 +5,15 @@ class ReviewsController < ApplicationController
     @product = Product.find(params[:product_id])
     @review = @product.reviews.create(review_params)
     @review.user = current_user
-
-    if @review.save
-      redirect_to product_path(@product), notice: "Review Saved!"
-    else
-      flash[:alert] = "Review not saved"
-      render 'products/show'
+    respond_to do |format|
+      if @review.save
+        format.html  {redirect_to product_path(@product), notice: "Review Saved!"}
+        format.js {render :create_success}
+      else
+        flash[:alert] = "Review not saved"
+        format.html {render 'products/show'}
+        format.js { render js: "alert('failure');"}
+      end
     end
   end
 
@@ -18,7 +21,10 @@ class ReviewsController < ApplicationController
     @product = Product.find(params[:product_id])
     @review = @product.reviews.find(params[:id])
     @review.destroy
-    redirect_to product_path(@product), notice: "Review Deleted!"
+    respond_to do |format|
+      format.html {redirect_to product_path(@product), notice: "Review Deleted!"}
+      format.js {render}
+    end
   end
 
   def liked_by?(user)

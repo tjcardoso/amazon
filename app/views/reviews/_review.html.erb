@@ -1,22 +1,25 @@
-<% if review.persisted? %>
 
+
+<% if review.persisted? %>
+<div id="<%= dom_id(review) %>" style="<%= style if defined?(style)%>">
+<ul>
+  <li>
 <p><%= review.body %></p>
 <p>Created by:  <%= review.user ? review.user.full_name.titleize : "" %></p>
 <p>Rating:  <%= review.stars %> Star(s)</p>
 
-<p>
   <%= link_to 'Destroy Review', [review.product, review],
                method: :delete,
-               data: { confirm: 'Are you sure?' } %>
-</p>
-<% end %>
-<br>
-<% if user_signed_in? && review.liked_by?(current_user) %>
-  <%= link_to "Remove Like", product_review_like_path(review.like_for(current_user), product_id: @product, review_id: review), method: :delete %>
-<% else %>
-  <%= link_to "Like", product_review_likes_path(product_id: @product, review_id: review), class: "icon-big", method: :post   %>
-<% end %><br>
+               data: { confirm: 'Are you sure?' },
+               remote: true %>
 
-<p>
-  Likes: (<%= review.likes.count %>)
-</p>
+<br>
+
+<div id="review-like">
+  <%= render "/likes/like", review: review%>
+</div>
+
+</li>
+</ul>
+<% end %>
+</div>

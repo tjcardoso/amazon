@@ -2,7 +2,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]  #should happen first
 
   before_action(:find_product, {only: [:show, :edit, :update, :destroy]})
-  
+
     def new
       # we need to define a new 'Product' object in order to be able to
       # properly generate form in Rails
@@ -30,6 +30,11 @@ class ProductsController < ApplicationController
     def show
       @product = Product.find params[:id]
       @review = Review.new
+      respond_to do |format|
+        format.html {render}
+        format.json {render json: @question.to_json}
+        format.xml {render xml: @products.to_xml}
+      end
     end
 
     def index
