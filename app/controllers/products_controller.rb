@@ -32,13 +32,17 @@ class ProductsController < ApplicationController
       @review = Review.new
       respond_to do |format|
         format.html {render}
-        format.json {render json: @question.to_json}
+        format.json {render json: @product.to_json(include: :reviews)}
         format.xml {render xml: @products.to_xml}
       end
     end
 
     def index
       @products = Product.all
+      respond_to do |format|
+        format.html {render}
+        format.json {render json: @products.to_json }
+      end
     end
 
     def edit
